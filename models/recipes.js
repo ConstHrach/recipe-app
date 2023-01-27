@@ -9,7 +9,7 @@ const recipeSchema = new mongoose.Schema({
   yield: {
     type: Number,
     min: [0, "What is it good for then?"],
-    max: [15, "Are we feeding an army?"],
+    max: [80, "Are we feeding an army?"],
     required: true,
   },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
