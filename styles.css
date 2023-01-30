@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+    background-color: burlywood;
+}
+.navBar{
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 1rem;
+    margin: 0;
+}
+.list{
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display:flex;
+    gap: 1rem;
+}
+.home{
+    text-decoration: none;
+}
+.about{
+    text-decoration: none;
+}
+.rec{
+    text-decoration: none;
+}
+.rev{
+    text-decoration: none;
+}
