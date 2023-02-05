@@ -19,7 +19,7 @@ function Healthy() {
           setHealthy(JSON.parse(check));
       } else{
           const api = await fetch(
-              `https://api.spoonacular.com/recipes/random?apikey=${process.env.API_KEY}&number=9&tags=healthy`
+              `https://api.spoonacular.com/recipes/random?apikey=${process.env.REACT_APP_API_KEY}&number=9&tags=healthy`
               );
           const data = await api.json();
 
