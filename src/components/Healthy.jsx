@@ -8,24 +8,22 @@ function Healthy() {
 
   const[healthy,setHealthy] = useState([]);
 
-  useEffect(()=>{
-      getHealthy();
-  }, []);
+  useEffect(() => {
+    getHealthy();
+}, []);
 
   const getHealthy = async () => {
       const check = localStorage.getItem("healthy");
 
       if(check){
-          setHealthy(JSON.parse(check));
+        setHealthy(JSON.parse(check));
       } else{
-          const api = await fetch(
-              `https://api.spoonacular.com/recipes/random?apikey=${process.env.REACT_APP_API_KEY}&number=9&tags=healthy`
-              );
-          const data = await api.json();
+        const api = await fetch(`https://api.spoonacular.com/recipes/random?apikey=${process.env.REACT_APP_API_KEY}&number=9&tags=healthy`);
+        const data = await api.json();
 
-          localStorage.setItem("healthy", JSON.stringify(data.recipes));
-          setHealthy(data.recipes);
-          console.log(data.recipes);
+        localStorage.setItem("healthy", JSON.stringify(data.recipes));
+        setHealthy(data.recipes);
+        console.log(data.recipes);
       }
   }
   return (

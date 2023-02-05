@@ -11,13 +11,13 @@ function Search() {
         navigate("/search/"+input);
     };
   return (
-    <FormStyle>
+    <FormStyle onSubmit={submitHandler}>
         <div>
             <FaSearch></FaSearch>
         <input 
         onChange={(e) => setInput(e.target.value)}
         type='text' 
-        value={input}/>
+        value={input} />
         </div>
     </FormStyle>
   );
