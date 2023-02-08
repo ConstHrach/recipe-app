@@ -68,7 +68,6 @@ min-height: 25rem;
 border-radius: 2rem;
 overflow: hidden;
 position: relative;
-
 img{
   border-radius: 2rem;
   position: absolute;
@@ -76,7 +75,6 @@ img{
   width: 100%;
   height: 100%;
   object-fit: cover;
-
 }
 p{
   position: absolute;

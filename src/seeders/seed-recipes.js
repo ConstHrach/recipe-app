@@ -1,53 +1,48 @@
-const mongoose = require("mongoose");
-const fetch = require("node-fetch");
-const { Recipes } = require("../models/server");
-const db = require("./models").mongoURI;
+require('dotenv').config();
+const mongoose = require('mongoose');
+const recipeSchema = require('../models/recipes');
 
-let resultData;
-let saveCounter = 0;
+const Recipes = mongoose.model('Recipes', recipeSchema)
 
-mongoose.connect(db)
-.then(() => console.log("mongodb connection successful"))
-.catch(error => console.log(error));
-const url = ['https://api.spoonacular.com/recipes/complexSearch?apikey=${process.env.REACT_APP_API_KEY}&query=${name}']
-url.map(async url => {
-try{
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Successfully connected to MongoDB.");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
-   const response = await fetch(url);
-   const json = await response.json();
-   resultData = [...json];
+const recipes = [
+  {
+    id: 1,
+    title: "Vegetable Stir Fry",
+    image: "https://spoonacular.com/recipeImages/681151-556x370.jpg",
+    cuisines: "Chinese",
+    instructions: "1. Heat the oil in a large frying pan or wok.\n2. Add the garlic and ginger and stir fry for 1 minute.\n3. Add the vegetables and stir fry for 3-4 minutes.\n4. Stir in the soy sauce and serve.",
+    ingredients: "123",
+    cookingMinutes: 5,
+    preparationMinutes: 10,
+    readyInMinutes: 15,
+    servings: 4,
+    glutenFree: true,
+    dairyFree: true,
+    vegan: true,
+    vegetarian: true,
+  },
+  // Add more recipes here
+];
 
-   for (let i = 0; i < resultData.length; i++) {
-      let recipe = new Recipes({
-         id: resultData[i].id,
-         title: resultData[i].title,
-         image: resultData[i].image,
-         cuisines: resultData[i].cuisines,
-         instructions: resultData[i].instructions,
-         extendedIngredients: [resultData[i].extendedIngredients],
-         cookingMinutes: resultData[i].cookingMinutes,
-         preparationMinutes: resultData[i].preparationMinutes,
-         readyInMinutes: resultData[i].readyInMinutes,
-         servings: resultData[i].servings,
-         glutenFree: resultData[i].glutenFree,
-         dairyFree: resultData[i].dairyFree,
-         vegan: resultData[i].vegan,
-         vegetarian: resultData[i].vegetarian,
-      })
+Recipes.create(recipes)
+  .then(() => {
+    console.log("Data seeded successfully.");
+    mongoose.connection.close();
+  })
+  .catch((error) => {
+    console.error("Error seeding data:", error);
+    mongoose.connection.close();
+  });
 
-   Recipes.save(() => {
-      console.log("saved" + Recipes)
-      
-      saveCounter++;
-  
-      if (saveCounter === resultData.length) {
-         mongoose.disconnect()
-         .then(() => console.log("saved succesfully and mongodb disconnected"))
-         .catch(error => console.log(error));
-         }
-      });
-   }
-} catch (error) {
-   console.log(error);
-}
-})
