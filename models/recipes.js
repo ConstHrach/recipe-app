@@ -1,22 +1,21 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-const recipeSchema = new mongoose.Schema({
-  recipe: { type: String, required: true },
-  pic: { type: String, default: "http://placekitten.com/350/350" },
+const recipeSchema = new Schema({
+  id: { type: Number, required: true},
+  title: { type: String, required: true },
+  image: { type: String },
   cuisines: { type: String, required: true },
-  prepmethod: { type: String, default: "Lorem Ipsum" },
-  cooktime: { type: String, default: "1min", required: true },
-  yield: {
-    type: Number,
-    min: [0, "What is it good for then?"],
-    max: [80, "Are we feeding an army?"],
-    required: true,
-  },
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+  instructions: { type: String },
+  ingredients: { type: String },
+  cookingMinutes: {type: Number },
+  preparationMinutes: { type: Number },
+  readyInMinutes: {type: Number },
+  servings: { type: Number },
+  glutenFree: { type: Boolean },
+  dairyFree: {type: Boolean },
+  vegan: { type: Boolean },
+  vegetarian: { type: Boolean },
 });
 
-recipeSchema.methods.showSnippet = function () {
-  return `${this.recipe} takes ${this.cooktime} to prepare and serves ${this.yield}.`;
-};
-
-module.exports = mongoose.model("Recipes", recipeSchema);
+module.exports = recipeSchema;
